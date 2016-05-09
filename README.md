@@ -23,10 +23,16 @@ $ git submodule update --init --recursive
 This will fetch `FreeRTOS` (full) source files from the github.
 Takes for a while. Please be patient.
 
-Do build with
+Build with
 ```
 $ make
 ```
+
+Build for ARM (Raspberry Pi),
+```
+$ make arm
+```
+
 
 ### Test programs
 
