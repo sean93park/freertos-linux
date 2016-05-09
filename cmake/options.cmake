@@ -13,36 +13,22 @@
 #   limitations under the License.
 
 # compile flags
-set(FLAGS_COMMON
-      "-fno-builtin"
-      "-march=i686"
-      "-m32"
-      )
+set(FLAGS_COMMON "-fno-builtin")
+set(FLAGS_CXXONLY "-fpermissive -fno-exceptions -fno-rtti")
 
-set(FLAGS_CXXONLY
-      "-fpermissive"
-      "-fno-exceptions"
-      "-fno-rtti"
-      )
+set(CMAKE_C_FLAGS_DEBUG "-O0 -g -DDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -DDEBUG")
+set(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 
-set(CMAKE_C_FLAGS_DEBUG
-      "-O0"
-      "-g"
-      "-DDEBUG"
-      )
-set(CMAKE_CXX_FLAGS_DEBUG
-      "-O0"
-      "-g"
-      "-DDEBUG"
-      )
-set(CMAKE_C_FLAGS_RELEASE
-      "-O2"
-      "-DNDEBUG"
-      )
-set(CMAKE_CXX_FLAGS_RELEASE
-      "-O2"
-      "-DNDEBUG"
-      )
+#
+if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "i686")
+  set(FLAGS_COMMON ${FLAGS_COMMON} "-march=i686 -m32")
+elseif (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "arm")
+  set(FLAGS_COMMON ${FLAGS_COMMON} "-mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4")
+else ()
+  message(fatal "processor unsupported yet")
+endif()
 
 # link
 set(EXE_LINK_LIBS "pthread")

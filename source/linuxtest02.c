@@ -98,6 +98,8 @@
 tick hook. */
 #define mainCHECK_DELAY           ( ( TickType_t ) 5000 / portTICK_RATE_MS )
 
+static int _nAppTickCnt = 0;
+static int _nAppIdleCnt = 0;
 
 void vApplicationTickHook( void )
 {
@@ -113,6 +115,7 @@ void vApplicationTickHook( void )
     ulTicksSinceLastDisplay = 0;
     ulCalled++;
   }
+  _nAppTickCnt++;
 }
 
 
@@ -123,21 +126,25 @@ void vApplicationIdleHook( void )
 
   struct timespec xTimeToSleep, xTimeSlept;
   /* Makes the process more agreeable when using the Posix simulator. */
-  xTimeToSleep.tv_sec = 1;
-  xTimeToSleep.tv_nsec = 0;
+  xTimeToSleep.tv_sec = 0;
+  xTimeToSleep.tv_nsec = 1;
   nanosleep( &xTimeToSleep, &xTimeSlept );
+  
+  _nAppIdleCnt++;
 }
 
 
-const TickType_t xDelay = 5000 / portTICK_PERIOD_MS;
+const TickType_t xDelayA = 5000 / portTICK_PERIOD_MS;
+const TickType_t xDelayB = 8000 / portTICK_PERIOD_MS;
 
 void prvTest02TaskA(void *pvParameters)
 {
   static unsigned int tickcount = 0;
 
   for ( ;; ) {
-    vTaskDelay(xDelay);
-    printf("Test02A ++++: %u\r\n", tickcount);
+    vTaskDelay(xDelayA);
+    printf("Test02A ++++: %u : T(%d), I(%d)\r\n", tickcount,
+           _nAppTickCnt, _nAppIdleCnt);
     tickcount++;
   }
   printf( "Test02A Task End.\r\n" );
@@ -150,7 +157,7 @@ void prvTest02TaskB(void *pvParameters)
   static unsigned int tickcount = 0;
 
   for ( ;; ) {
-    vTaskDelay(xDelay);
+    vTaskDelay(xDelayB);
     printf("Test02B ----: %u\r\n", tickcount);
     tickcount++;
   }

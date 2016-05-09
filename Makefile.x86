@@ -12,15 +12,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-OUTPUT_ROOT     := "build"
+OUTPUT_ROOT     := "build/x86"
+CMAKE_FOLDER    := "./$(OUTPUT_ROOT)/cmake"
+CMAKE_DEFINES   := "-DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/toolchain_linux-i686.cmake"
 
-.phony: all clean arm
+.phony: all
+
 
 all:
-	make -f Makefile.x86
-
-arm:
-	make -f Makefile.arm
-
-clean:
-	rm -rf $(OUTPUT_ROOT)
+	git submodule update --recursive
+	mkdir -p $(CMAKE_FOLDER)
+	cmake -B$(CMAKE_FOLDER) -H./ $(CMAKE_DEFINES)
+	make -C $(CMAKE_FOLDER)

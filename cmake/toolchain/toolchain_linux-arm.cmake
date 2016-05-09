@@ -12,15 +12,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-OUTPUT_ROOT     := "build"
+include(CMakeForceCompiler)
 
-.phony: all clean arm
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR arm)
 
-all:
-	make -f Makefile.x86
-
-arm:
-	make -f Makefile.arm
-
-clean:
-	rm -rf $(OUTPUT_ROOT)
+SET(CMAKE_C_COMPILER   arm-linux-gnueabihf-gcc)
+SET(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
