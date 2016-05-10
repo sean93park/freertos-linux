@@ -31,30 +31,3 @@ set_target_properties(${LIBFREERTOSLINUX} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${BUILD_LIB}"
     LIBRARY_OUTPUT_DIRECTORY "${BUILD_LIB}"
     RUNTIME_OUTPUT_DIRECTORY "${BUILD_BIN}")
-
-function(BuildTestApp APPNAME APPFILES)
-    add_executable(${APPNAME} ${APPFILES})
-    target_include_directories(${APPNAME} SYSTEM PRIVATE ${FREERTOS_INCLUDE})
-    target_include_directories(${APPNAME} PUBLIC ${FREERTOS_SOURCE})
-    target_include_directories(${APPNAME} PUBLIC ${PATH_INCLUDE})
-    target_include_directories(${APPNAME} PUBLIC ${PATH_PORTABLE})
-    set_target_properties(${APPNAME} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY "${BUILD_LIB}"
-        LIBRARY_OUTPUT_DIRECTORY "${BUILD_LIB}"
-        RUNTIME_OUTPUT_DIRECTORY "${BUILD_BIN}")
-    target_link_libraries(${APPNAME} LINK_PUBLIC
-                          ${LIBFREERTOS} ${LIBFREERTOSLINUX}
-                          ${EXE_LINK_LIBS})
-endfunction(BuildTestApp)
-
-# linux test program 01
-set(LINUXTES01 "linuxtest01")
-set(TEST01_FILES
-      "${PATH_SOURCE}/linuxtest01.c")
-BuildTestApp(${LINUXTES01} ${TEST01_FILES})
-
-# linux test program 02
-set(LINUXTES02 "linuxtest02")
-set(TEST02_FILES
-      "${PATH_SOURCE}/linuxtest02.c")
-BuildTestApp(${LINUXTES02} ${TEST02_FILES})

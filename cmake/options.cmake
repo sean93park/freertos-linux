@@ -41,6 +41,7 @@ set(FREERTOS_INCLUDE  "${FREERTOS_ROOT}/Source/include")
 
 set(PATH_ROOT         "${CMAKE_SOURCE_DIR}")
 set(PATH_SOURCE       "${PATH_ROOT}/source")
+set(PATH_TESTS        "${PATH_ROOT}/tests")
 set(PATH_INCLUDE      "${PATH_ROOT}/include")
 set(PATH_PORTABLE     "${PATH_ROOT}/portable")
 
