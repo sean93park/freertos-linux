@@ -12,9 +12,17 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-OUTPUT_ROOT     := "build/x86"
+BUILDTYPE		?= "debug"
+
+ifeq ($(BUILDTYPE),release)
+else
+  BUILDTYPE = debug
+endif
+
+OUTPUT_ROOT     := "build/x86-$(BUILDTYPE)"
 CMAKE_FOLDER    := "./$(OUTPUT_ROOT)/cmake"
 CMAKE_DEFINES   := "-DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/toolchain_linux-i686.cmake"
+CMAKE_TYPE      := "-DCMAKE_BUILD_TYPE=$(BUILDTYPE)"
 
 .phony: all
 
@@ -22,5 +30,5 @@ CMAKE_DEFINES   := "-DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain/toolchain_linux-i68
 all:
 	git submodule update --recursive
 	mkdir -p $(CMAKE_FOLDER)
-	cmake -B$(CMAKE_FOLDER) -H./ $(CMAKE_DEFINES)
+	cmake -B$(CMAKE_FOLDER) -H./ $(CMAKE_DEFINES) $(CMAKE_TYPE)
 	make -C $(CMAKE_FOLDER)
