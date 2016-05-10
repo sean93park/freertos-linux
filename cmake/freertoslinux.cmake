@@ -18,7 +18,6 @@ set(LIBFREERTOSLINUX "freertoslinux")
 
 # source files
 set(LIBLINUX_SOURCE_FILES
-      "${FREERTOS_SOURCE}/portable/MemMang/heap_3.c"
       "${PATH_PORTABLE}/port.c"
       "${PATH_PORTABLE}/partest.c"
       )

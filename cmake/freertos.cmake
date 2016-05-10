@@ -18,6 +18,7 @@ set(LIB_SOURCE_FILES
       "${FREERTOS_SOURCE}/list.c"
       "${FREERTOS_SOURCE}/queue.c"
       "${FREERTOS_SOURCE}/croutine.c"
+      "${FREERTOS_SOURCE}/portable/MemMang/heap_3.c"
       )
 
 # library name
